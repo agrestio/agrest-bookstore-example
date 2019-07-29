@@ -32,7 +32,7 @@ public class CategoryResource {
     @GET
     public DataResponse<Category> getAll(@Context UriInfo uriInfo) {
         return Ag.select(Category.class, config)
-                .stage(SelectStage.ASSEMBLE_QUERY, c -> c.getEntity().getSelect().useLocalCache("QwertyCache"))
+                .stage(SelectStage.ASSEMBLE_QUERY, c -> c.getEntity().getSelect().useLocalCache("categories"))
                 .uri(uriInfo)
                 .get();
     }
