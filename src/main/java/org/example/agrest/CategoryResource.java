@@ -2,6 +2,7 @@ package org.example.agrest;
 
 import io.agrest.Ag;
 import io.agrest.DataResponse;
+import io.agrest.SelectStage;
 import io.agrest.SimpleResponse;
 import org.example.agrest.persistent.Category;
 
@@ -30,7 +31,9 @@ public class CategoryResource {
 
     @GET
     public DataResponse<Category> getAll(@Context UriInfo uriInfo) {
-        return Ag.select(Category.class, config).uri(uriInfo).get();
+        return Ag.select(Category.class, config)
+                .stage(SelectStage.ASSEMBLE_QUERY, c -> c.getEntity().getSelect().useLocalCache("QwertyCache"))
+                .uri(uriInfo)
+                .get();
     }
-
 }
