@@ -23,5 +23,5 @@ Now you can navigate to http://127.0.0.1:8080/api/category
 curl -i -X POST 'http://127.0.0.1:8080/api/category' \
          -d '{"name":"SciFi","description":"Science Fiction Books"}'
          
-curl -i -X GET 'http://127.0.0.1:8080/link-rest-cms-demo/domain'
+curl -i -X GET 'http://127.0.0.1:8080/api/category'
 ```
