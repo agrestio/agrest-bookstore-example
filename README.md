@@ -1,8 +1,6 @@
 # agrest-bookstore-example
 
-[![Build Status](https://travis-ci.org/agrestio/agrest-bookstore-example.svg?branch=master)](https://travis-ci.org/agrestio/agrest-bookstore-example)
-
-A simple example of an [AgRest](http://agrest.io) / [Apache Cayenne](http://cayenne.apache.org/) application.
+A simple example of an [AgRest](https://agrest.io) / [Apache Cayenne](https://cayenne.apache.org/) application.
 
 ## Prerequisites:
 
