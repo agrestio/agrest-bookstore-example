@@ -1,7 +1,13 @@
 package org.example.agrest.persistent.auto;
 
-import org.apache.cayenne.CayenneDataObject;
-import org.apache.cayenne.exp.Property;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import org.apache.cayenne.BaseDataObject;
+import org.apache.cayenne.exp.property.EntityProperty;
+import org.apache.cayenne.exp.property.PropertyFactory;
+import org.apache.cayenne.exp.property.StringProperty;
 import org.example.agrest.persistent.Category;
 
 /**
@@ -10,28 +16,39 @@ import org.example.agrest.persistent.Category;
  * since it may be overwritten next time code is regenerated.
  * If you need to make any customizations, please use subclass.
  */
-public abstract class _Book extends CayenneDataObject {
+public abstract class _Book extends BaseDataObject {
 
-    private static final long serialVersionUID = 1L; 
+    private static final long serialVersionUID = 1L;
 
     public static final String ID_PK_COLUMN = "ID";
 
-    public static final Property<String> AUTHOR = Property.create("author", String.class);
-    public static final Property<String> TITLE = Property.create("title", String.class);
-    public static final Property<Category> CATEGORY = Property.create("category", Category.class);
+    public static final StringProperty<String> AUTHOR = PropertyFactory.createString("author", String.class);
+    public static final StringProperty<String> TITLE = PropertyFactory.createString("title", String.class);
+    public static final EntityProperty<Category> CATEGORY = PropertyFactory.createEntity("category", Category.class);
+
+    protected String author;
+    protected String title;
+
+    protected Object category;
 
     public void setAuthor(String author) {
-        writeProperty("author", author);
+        beforePropertyWrite("author", this.author, author);
+        this.author = author;
     }
+
     public String getAuthor() {
-        return (String)readProperty("author");
+        beforePropertyRead("author");
+        return this.author;
     }
 
     public void setTitle(String title) {
-        writeProperty("title", title);
+        beforePropertyWrite("title", this.title, title);
+        this.title = title;
     }
+
     public String getTitle() {
-        return (String)readProperty("title");
+        beforePropertyRead("title");
+        return this.title;
     }
 
     public void setCategory(Category category) {
@@ -42,5 +59,67 @@ public abstract class _Book extends CayenneDataObject {
         return (Category)readProperty("category");
     }
 
+    @Override
+    public Object readPropertyDirectly(String propName) {
+        if(propName == null) {
+            throw new IllegalArgumentException();
+        }
+
+        switch(propName) {
+            case "author":
+                return this.author;
+            case "title":
+                return this.title;
+            case "category":
+                return this.category;
+            default:
+                return super.readPropertyDirectly(propName);
+        }
+    }
+
+    @Override
+    public void writePropertyDirectly(String propName, Object val) {
+        if(propName == null) {
+            throw new IllegalArgumentException();
+        }
+
+        switch (propName) {
+            case "author":
+                this.author = (String)val;
+                break;
+            case "title":
+                this.title = (String)val;
+                break;
+            case "category":
+                this.category = val;
+                break;
+            default:
+                super.writePropertyDirectly(propName, val);
+        }
+    }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        writeSerialized(out);
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        readSerialized(in);
+    }
+
+    @Override
+    protected void writeState(ObjectOutputStream out) throws IOException {
+        super.writeState(out);
+        out.writeObject(this.author);
+        out.writeObject(this.title);
+        out.writeObject(this.category);
+    }
+
+    @Override
+    protected void readState(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        super.readState(in);
+        this.author = (String)in.readObject();
+        this.title = (String)in.readObject();
+        this.category = in.readObject();
+    }
 
 }

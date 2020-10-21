@@ -14,7 +14,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-
 @Path("category")
 @Produces(MediaType.APPLICATION_JSON)
 public class CategoryResource {

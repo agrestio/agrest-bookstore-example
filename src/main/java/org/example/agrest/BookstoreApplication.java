@@ -1,5 +1,7 @@
 package org.example.agrest;
 
+import io.agrest.cayenne.AgCayenneBuilder;
+import io.agrest.cayenne.AgCayenneModule;
 import io.agrest.runtime.AgBuilder;
 import io.agrest.runtime.AgRuntime;
 import org.apache.cayenne.configuration.server.ServerRuntime;
@@ -12,15 +14,13 @@ public class BookstoreApplication extends ResourceConfig {
 
     public BookstoreApplication() {
 
-        ServerRuntime cayenneRuntime
-                = ServerRuntime.builder()
-                               .addConfig("cayenne-project.xml")
-                               .build();
+        ServerRuntime cayenneRuntime = ServerRuntime.builder()
+                .addConfig("cayenne-project.xml")
+                .build();
+        AgCayenneModule cayenneExt = AgCayenneBuilder.build(cayenneRuntime);
+        AgRuntime agRuntime = new AgBuilder().module(cayenneExt).build();
 
-        AgRuntime agRuntime = AgBuilder.build(cayenneRuntime);
-        super.register(agRuntime);
-
+        register(agRuntime);
         packages("org.example.agrest");
-
     }
 }
