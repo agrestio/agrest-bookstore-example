@@ -18,7 +18,6 @@ import javax.ws.rs.core.UriInfo;
 @Produces(MediaType.APPLICATION_JSON)
 public class CategoryApi {
 
-
     @Context
     private Configuration config;
 
@@ -31,5 +30,4 @@ public class CategoryApi {
     public DataResponse<Category> getAll(@Context UriInfo uriInfo) {
         return Ag.select(Category.class, config).uri(uriInfo).get();
     }
-
 }
