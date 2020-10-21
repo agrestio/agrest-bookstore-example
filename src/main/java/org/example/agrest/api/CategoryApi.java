@@ -1,4 +1,4 @@
-package org.example.agrest;
+package org.example.agrest.api;
 
 import io.agrest.Ag;
 import io.agrest.DataResponse;
@@ -16,7 +16,7 @@ import javax.ws.rs.core.UriInfo;
 
 @Path("category")
 @Produces(MediaType.APPLICATION_JSON)
-public class CategoryResource {
+public class CategoryApi {
 
 
     @Context

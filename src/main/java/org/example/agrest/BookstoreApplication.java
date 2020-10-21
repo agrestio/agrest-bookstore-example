@@ -21,6 +21,6 @@ public class BookstoreApplication extends ResourceConfig {
         AgRuntime agRuntime = new AgBuilder().module(cayenneExt).build();
 
         register(agRuntime);
-        packages("org.example.agrest");
+        packages("org.example.agrest.api");
     }
 }
